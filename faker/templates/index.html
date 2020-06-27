@@ -1,0 +1,183 @@
+<!--
+ * @Description: 
+ * @Author: ashen23
+ * @LastEditTime: 2020-06-24 17:07:42
+ * @FilePath: /faker/faker/templates/index.html
+ * @Copyright: © 2020 Ashen23. All rights reserved.
+-->
+{% extends "base.html" %}
+
+{% block content %}
+
+<center class="title">{{ title }}</center>
+
+<el-row type="flex" justify="space-around">
+  <el-col :span="15" :offset="3">
+    <div style="margin-top: 30px; margin-bottom: 15px;">
+      <label class="label-ip">本机服务器地址为：</label>
+      <el-link class="label-ip" type="info" href="{{ ip }}" target="_blank">{{ ip }}</el-link>
+    </div>
+  </el-col>
+  <el-col :span="6">
+    <el-button round size="mini" @click="handleShowAddGroup" style="margin-top: 30px;">新建分组</el-button>
+    <el-button round size="mini" @click="handleAddRequest" style="margin-top: 30px;">添加接口</el-button>
+  </el-col>
+</el-row>
+
+<el-row type="flex">
+  <el-col :span="18" :offset="3">
+    <el-divider></el-divider>
+  </el-col>
+</el-row>
+
+<el-row type="flex" justify="space-around">
+  <el-col :span="20" :offset="1">
+
+    <div v-if="sections.length<=0">
+      <img class="empty-image" src="{{ url_for('static', filename='images/empty.png') }}" @click="addRequest"
+        alt="welcome">
+    </div>
+
+    <el-tabs v-else tab-position="left" @tab-click="handleTabChanged">
+      <el-tab-pane v-for="section in sections" :key="section.name">
+        <span slot="label"><i :class="section.icon"></i>{{section.name}}</span>
+
+        <el-table stripe
+          :data="section.urls.filter(data => !search || data.url.toLowerCase().includes(search.toLowerCase()))"
+          style="width: 80%">
+          <el-table-column label="名称" prop="desc" width='220'></el-table-column>
+          <el-table-column label="方法" prop="method" width='100'></el-table-column>
+          <el-table-column label="参数" prop="param" width='130'></el-table-column>
+          <el-table-column label="路径" prop="fullUrl"></el-table-column>
+          <el-table-column align="center" width="200" fixed="right">
+            <template slot="header" slot-scope="scope">
+              <el-input clearable v-model="search" size="mini" placeholder="输入关键字搜索" />
+            </template>
+            <template slot-scope="scope">
+              <el-link type="primary" :underline="false" @click.native.stop="handleDetail(scope.row)">查看</el-link>
+              <el-link type="primary" :underline="false" style="margin-left: 10px; margin-right: 10px;"
+                @click.native.stop="handleEdit(scope.$index, scope.row)">编辑</el-link>
+              <el-link type="danger" :underline="false" @click.native.stop="handleDelete(scope.$index, scope.row)">移除
+              </el-link>
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
+    </el-tabs>
+  </el-col>
+</el-row>
+
+<!-- 滑动到顶部 -->
+<el-backtop></el-backtop>
+
+
+<el-dialog title="添加分组" :visible.sync="dialogVisible" width="50%" :close-on-click-modal="closeOnModal" @close="handleCloseDialog">
+  <el-form :model="form">
+      <el-form-item label="分组名称" :label-width="formLabelWidth">
+        <el-input class="dialog-input" v-model="form.name" placeholder="请输入分组名称(*)" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="Base url" :label-width="formLabelWidth">
+        <el-input class="dialog-input" v-model="form.baseUrl" placeholder="请输入分组base url(*)" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="分组图标" :label-width="formLabelWidth">
+        <el-select v-model="form.icon" placeholder="请选择分组图标" @change="iconChanged">
+          <el-option v-for="icon in groupIcons" :key="icon.name" :value="icon.icon"><i :class="icon.icon"></i>{{icon.name}}</el-option>
+        </el-select>
+        <i style="font-size: 25px; margin-left: 15px;" :class="form.icon"></i>
+      </el-form-item>
+    </el-form>
+  <span slot="footer" class="dialog-footer">
+  <el-button @click="dialogVisible = false">取 消</el-button>
+  <el-button type="primary" @click="handleAddGroup">确 定</el-button>
+  </span>
+</el-dialog>
+
+{% endblock %}
+
+
+<!-- script -->
+{% block script %}
+<script>
+  var ip = {{ ip| tojson }};
+  var groupIcons = {{ icons| tojson }};
+  var sections = {{ sections| tojson }};
+
+  $SCRIPT_ROOT = {{ request.script_root | tojson | safe }};
+
+  var app = new Vue({
+    el: '#app',
+    data() {
+      return {
+        sections: sections,
+        groupIcons: groupIcons,
+        search: '',
+        selectTab: 0,
+        activeIndex: "1",
+        dialogVisible: false,
+        closeOnModal: false,
+        form: {
+            "name": "",
+            "baseUrl": "",
+            "icon": ""
+        },
+        cacheForm: {},
+        formLabelWidth: '120px'
+      };
+    },
+    methods: {
+      handleEdit(index, info) {
+        window.open($SCRIPT_ROOT + '/add_request?url=' + info.fullUrl + "&urlId=" + info.id + "&method=" + info.method, '_blank');
+      },
+      handleDelete(index, info) {
+        this.$confirm('确认删除《' + info["desc"] + "》吗？", "警告", {
+          confirmButtonText: '删除',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(_ => {
+          axios.post($SCRIPT_ROOT + '/deleteRequest', { "urlId": info.id, "url": info.fullUrl, "method": info.method }).then(function (response) {
+            if (response.data['code'] != 1) {
+              ELEMENT.Message({ showClose: true, message: response.data['msg'], type: "error" });
+            } else {
+              app.sections[app.selectTab].urls.splice(index, 1);
+              ELEMENT.Message({ showClose: true, message: '删除完成', type: "success" });
+            }
+          });
+        }).catch(_ => { });
+      },
+      handleAddRequest() {
+        window.open($SCRIPT_ROOT + '/add_request', '_blank');
+      },
+      handleAddGroup() {
+        axios.post($SCRIPT_ROOT + '/addGroup', { "form": app.form}).then(function (response) {
+            if (response.data['code'] != 1) {
+              ELEMENT.Message({ showClose: true, message: response.data['msg'], type: "error" });
+            } else {
+              app.dialogVisible = false;
+              ELEMENT.Message({ showClose: true, message: '添加完成', type: "success" });
+            }
+          });
+      },
+      handleShowAddGroup() {
+        app.dialogVisible = true;
+      },
+      handleDetail(info) {
+        window.open($SCRIPT_ROOT + '/api_detail?url=' + info.fullUrl + "&urlId=" + info.id + "&method=" + info.method, '_blank');
+      },
+      handleTabChanged(idx) {
+        app.selectTab = idx["index"];
+      },
+      iconChanged(value) {
+        app.selectIcon = value;
+      },
+      handleCloseDialog() {        
+        app.cacheForm = {"name": app.form.name, "baseUrl":app.form.baseUrl, "icon":app.form.icon};
+        app.form.name= "";
+        app.form.baseUrl = "";
+        app.form.icon = "";
+      }
+
+    }
+  })
+
+</script>
+{% endblock %}

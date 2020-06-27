@@ -1,0 +1,35 @@
+{
+    "code": 1,
+    "msg": "成功",
+    "data": {
+        "id": 3,
+        "name": "自建 iOS 静态库并用 pod 管理",
+        "timeIntervel": "1589356578",
+        "digest": "最近公司由于和其他公司建立了各种合作关系，“创建 SDK”工作被提上了日程，由于之前没有自己做过，在生成 framework 时踩了一些坑，在这里记录下来以做总结，若码友能用得上则不胜开心。",
+        "licence": "CC-BY-4.0",
+        "detail": "SDK 除了代码之外，难免会有一些资源文件（图片，音频，视频，plist等）需要被加载，资源文件如何处理的呢？对于资源文件的处理，这里分两种情况：静态库和动态库（原因：静态库和动态库的编译方式不同，导致资源存储路径有差异）。静态库，原本的资源文件(eg: resource.bunle)放在 framework 下，但是生成 App 后，由于静态库被吸附，导致 bundle 资源文件丢失，无法查找到对应文件，需要手动加入依赖文件。即在podsepc中的s.resources中，指定该静态库资源的位置。动态库，资源文件也放在 framework 下，被一同拷贝到 mainBunle 的 Frameworks 文件夹下，资源可以直接使用。例如下图，OCDynamicSDK.framework 和 SJSwiftSDK.framework 都是动态库，各自需要的 bundle 资源在各自的 framework 下，app 编译成功后，路径为mainBunle/Frameworks/OCDynamicSDK.framework/dynamic.bundle ；SJOCSDK.framework 为静态库，编译后此文件消失(被吸附到 app 中)，framework 下若有 bundle文件，会被丢弃，所以需要脱离当前 framework 手动指定 bundle，即下图中的resources/OCSDKBundle.bundle，路径为mainBundle/OCSDKBundle.bundle。此处的 mainBunle 表示 [NSBundle mainBundle]获取的路径，即 app 的根路径。 查看 app 内容：XCode 项目列表-> Products/xxx.app -> 右键 Show in Finder -> 显示包内容，即可看到 app 所有内容及文件结构。",
+        "user": {
+            "username": "ashen-23",
+            "age": 27,
+            "height": 173.5,
+            "tags": [
+                {
+                    "tagid": "1",
+                    "name": "Swift"
+                },
+                {
+                    "tagid": "2",
+                    "name": "Python3"
+                },
+                {
+                    "tagid": "3",
+                    "name": "Shell"
+                },
+                {
+                    "tagid": "4",
+                    "name": "OC"
+                }
+            ]
+        }
+    }
+}

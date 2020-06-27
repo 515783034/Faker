@@ -1,0 +1,9 @@
+{
+    "code": 1,
+    "msg": "成功",
+    "data": {
+        "name": "iPhone XS Max",
+        "price": 6599,
+        "goodsId": "G10001"
+    }
+}

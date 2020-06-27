@@ -1,0 +1,227 @@
+{
+    "newId": 3,
+    "project": "MockExample",
+    "groups": [
+        {
+            "name": "用户",
+            "icon": "el-icon-user",
+            "desc": "user",
+            "baseUrl": "/user/",
+            "urls": [
+                {
+                    "id": 0,
+                    "url": "login",
+                    "fullUrl": "/user/login",
+                    "desc": "登录",
+                    "method": "GET",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 1,
+                    "url": "logout",
+                    "fullUrl": "/user/logout",
+                    "desc": "登出",
+                    "method": "POST",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 2,
+                    "url": "userInfo",
+                    "fullUrl": "/user/userInfo",
+                    "desc": "用户信息",
+                    "method": "GET",
+                    "param": "userId",
+                    "paramType": ""
+                },
+                {
+                    "id": 3,
+                    "url": "changePwd",
+                    "fullUrl": "/user/changePwd",
+                    "desc": "修改密码",
+                    "method": "POST",
+                    "param": "",
+                    "paramType": ""
+                }
+            ]
+        },
+        {
+            "name": "信息流",
+            "icon": "el-icon-film",
+            "desc": " infomationflow",
+            "baseUrl": "/infomation/flow/",
+            "urls": [
+                {
+                    "id": 4,
+                    "url": "infoList",
+                    "fullUrl": "/infomation/flow/infoList",
+                    "desc": "信息流列表数据",
+                    "method": "GET",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 5,
+                    "url": "infoDetail",
+                    "fullUrl": "/infomation/flow/infoDetail",
+                    "desc": "信息流详情",
+                    "method": "GET",
+                    "param": "id",
+                    "paramType": ""
+                },
+                {
+                    "id": 6,
+                    "url": "infoAdd",
+                    "fullUrl": "/infomation/flow/infoAdd",
+                    "desc": "添加信息",
+                    "method": "POST",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 7,
+                    "url": "infoUpdate",
+                    "fullUrl": "/infomation/flow/infoUpdate",
+                    "desc": "修改信息",
+                    "method": "POST",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 8,
+                    "url": "infoDelete",
+                    "fullUrl": "/infomation/flow/infoDelete",
+                    "desc": "删除信息",
+                    "method": "POST",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 9,
+                    "url": "infoQuery",
+                    "fullUrl": "/infomation/flow/infoQuery",
+                    "desc": "查询信息",
+                    "method": "GET",
+                    "param": "keywords",
+                    "paramType": ""
+                },
+                {
+                    "id": 10,
+                    "url": "infoMarkRead",
+                    "fullUrl": "/infomation/flow/infoMarkRead",
+                    "desc": "信息设为已读",
+                    "method": "POST",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 11,
+                    "url": "infoUnreadCount",
+                    "fullUrl": "/infomation/flow/infoUnreadCount",
+                    "desc": "信息未读数",
+                    "method": "POST",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 12,
+                    "url": "infoLast",
+                    "fullUrl": "/infomation/flow/infoLast",
+                    "desc": "最近一条信息",
+                    "method": "GET",
+                    "param": "",
+                    "paramType": ""
+                }
+            ]
+        },
+        {
+            "name": "购物",
+            "icon": "el-icon-shopping-cart-full",
+            "desc": "shopping",
+            "baseUrl": "/shopping/",
+            "urls": [
+                {
+                    "id": 13,
+                    "url": "goodsList",
+                    "fullUrl": "/shopping/goodsList",
+                    "desc": "商品列表",
+                    "method": "GET",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 14,
+                    "url": "goodsDetail",
+                    "fullUrl": "/shopping/goodsDetail",
+                    "desc": "商品详情",
+                    "method": "GET",
+                    "param": "goodsId",
+                    "paramType": "Params"
+                },
+                {
+                    "id": 15,
+                    "url": "goodsBuy",
+                    "fullUrl": "/shopping/goodsBuy",
+                    "desc": "商品购买",
+                    "method": "POST",
+                    "param": "goodsId",
+                    "paramType": "Body: form data"
+                },
+                {
+                    "id": 16,
+                    "url": "goodsPay",
+                    "fullUrl": "/shopping/goodsPay",
+                    "desc": "商品付款信息",
+                    "method": "POST",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 17,
+                    "url": "goodsRefund",
+                    "fullUrl": "/shopping/goodsRefund",
+                    "desc": "商品申请退款",
+                    "method": "POST",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 18,
+                    "url": "goodsOrder",
+                    "fullUrl": "/shopping/goodsOrder",
+                    "desc": "商品 预订",
+                    "method": "POST",
+                    "param": "",
+                    "paramType": ""
+                }
+            ]
+        },
+        {
+            "name": "其他",
+            "icon": "el-icon-connection",
+            "desc": "other",
+            "baseUrl": "",
+            "urls": [
+                {
+                    "id": 19,
+                    "url": "logUpload",
+                    "fullUrl": "/base/logUpload",
+                    "desc": "demo接口1",
+                    "method": "GET",
+                    "param": "",
+                    "paramType": ""
+                },
+                {
+                    "id": 20,
+                    "url": "demo",
+                    "fullUrl": "/demo/demo",
+                    "desc": "demo接口2",
+                    "method": "GET",
+                    "param": "",
+                    "paramType": ""
+                }
+            ]
+        }
+    ]
+}

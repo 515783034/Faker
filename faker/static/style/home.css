@@ -1,0 +1,103 @@
+
+.header-image {
+    width: 40px;
+    height: 40px;
+}
+
+.faker {
+    font-size: 30px;
+    font-weight: bolder;
+    color: #ff6600;
+}
+
+.dialog-input {
+    width: 60%;
+}
+
+.el-menu--horizontal>.el-menu-item.is-active {
+    border-bottom: 2px solid #ff6600;
+}
+
+.title {
+    font-family: "Microsoft YaHei";
+    font-weight: 900;
+    font-size: 30px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: #ff6600;
+  }
+
+.label-ip {
+    font-family: "Microsoft YaHei";
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.add_url {
+    margin-top: 20px;
+}
+
+.add_label {
+    padding-top: 10px;
+    height: 40px;
+    font-size: 14px;
+}
+
+.el-select .el-input {
+    width: 150px;
+}
+
+.input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+}
+
+.button-new-tag {
+    margin-left: 10px;
+    margin-top: 3px;
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.el-tag + .el-tag {
+    margin-left: 10px;
+}
+
+
+.el-tabs__item {
+    text-align: left !important;
+    font-size: 15px !important;
+    height: 45px !important;
+    font-weight: 400;
+    color: #999999;
+}
+
+.el-tabs__item.is-active {
+    color: #ff6600 !important;
+}
+
+.el-tabs__active-bar {
+    background-color: #ff6600 !important;
+}
+
+.el-tabs__content {
+    padding-left: 10px;
+    padding-top: 15px;
+}
+
+
+i {
+    margin-right: 5px;
+}
+
+.empty-image {
+    width: 100%;
+    cursor: pointer;
+}
+
+[v-cloak] {
+    display: none;
+}

@@ -1,0 +1,29 @@
+{
+    "code": 1,
+    "data": {
+        "useId": 10002,
+        "age": 27,
+        "avatar": "https://avatars2.githubusercontent.com/u/12229367?s=460&u=d0c1d86d83e12c28607a49d95ded0469934f96d9&v=4",
+        "height": 173.5,
+        "tags": [
+            {
+                "name": "Swift",
+                "tagid": "1"
+            },
+            {
+                "name": "Python3",
+                "tagid": "2"
+            },
+            {
+                "name": "Shell",
+                "tagid": "3"
+            },
+            {
+                "name": "OC",
+                "tagid": "4"
+            }
+        ],
+        "username": "ashen23(10002)"
+    },
+    "msg": "成功"
+}

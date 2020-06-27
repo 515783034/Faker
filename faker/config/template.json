@@ -1,0 +1,30 @@
+{
+    "newId": 3,
+    "project": "",
+    "groups": [
+        {
+            "name": "其他",
+            "icon": "el-icon-connection",
+            "desc": "other",
+            "baseUrl": "",
+            "urls": [
+                {
+                    "id": 0,
+                    "url": "demo1",
+                    "fullUrl": "/mockData/demo/demo1",
+                    "desc": "demo接口1",
+                    "method": "POST",
+                    "param": ""
+                },
+                {
+                    "id": 1,
+                    "url": "demo2",
+                    "fullUrl": "/mockData/demo/demo2",
+                    "desc": "demo接口2",
+                    "method": "GET",
+                    "param": ""
+                }
+            ]
+        }
+    ]
+}

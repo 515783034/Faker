@@ -1,0 +1,82 @@
+<!--
+ * @Date: 2020-06-19 15:04:36
+ * @Author: ashen23
+ * @LastEditors: ashen_23
+ * @LastEditTime: 2020-06-24 16:10:56
+ * @FilePath: /faker/faker/templates/detail.html
+--> 
+
+{% extends "base.html" %}
+
+<!-- body content -->
+{% block content %}
+<center class="title">Mock Data 接口详情</center>
+
+<el-row type="flex" class="row-bg" justify="center">
+    <el-col :span="18">
+        <el-alert :title="desc" type="info" :description="url" show-icon :closable="false"></el-alert>
+    </el-col>
+</el-row>
+
+<!-- 设置接口参数 -->
+<el-row v-if="paramValues" type="flex" justify="start" style="margin-top: 15px;">
+    <el-col :span="3"></el-col>
+    <el-col :span="4">
+        <el-input placeholder="参数名（可选）" v-model="paramName" :disabled="true">
+            <template slot="prepend">{{ result["urlInfo"]["paramType"] }}</template>
+        </el-input>
+    </el-col>
+
+    <el-col :span="12" style="margin-left: 20px;">
+        <el-tag :key="tag" v-for="tag in paramValues" :disable-transitions="false">{{tag}}</el-tag>
+    </el-col>
+</el-row>
+
+<el-row type="flex" justify="center" style="margin-top: 15px;">
+    <el-col :span="18">
+        <el-tabs v-if="paramValues" v-model="selectParamValue" type="card">
+            <el-tab-pane v-for="(item, index) in paramValues" :key="item" :label="item" :name="item">
+            <el-input type="textarea" rows=27 placeholder="请输入接口待返回的json字符串" v-model="paramJson[index]"></el-input>
+            </el-tab-pane>
+        </el-tabs>
+
+        <el-input v-else type="textarea" rows=27 placeholder="请输入接口待返回的json字符串" v-model="content"></el-input>
+
+<div style="height: 25px;"></div>
+
+<el-row :gutter="20">
+    <el-col :span="6" :offset="18">
+        <el-button type="warning" round @click="handleEdit">去修改</el-button>
+    </el-col>
+</el-row>
+{% endblock %}
+
+
+
+<!-- script -->
+{% block script %}
+<script>
+    result = {{ result|tojson }};
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+    var app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                desc: result["urlInfo"]["desc"],
+                content: result["urlInfo"]["content"],
+                paramName: result["urlInfo"]["param"],
+                paramValues: result["urlInfo"]["param_values"],
+                paramJson: result["urlInfo"]["param_jsons"],
+                selectParamValue: result["urlInfo"]["selectParamValue"]
+            };
+        },
+        methods: {
+            handleEdit() {
+                window.open($SCRIPT_ROOT + '/add_request?url=' + result["url"] + "&method=" + result["urlInfo"]["method"] + "&urlId=" + result["urlInfo"]["id"], '_blank');
+            }
+        }
+    })
+
+</script>
+{% endblock %}

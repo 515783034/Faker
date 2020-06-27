@@ -1,0 +1,43 @@
+<!--
+ * @Description: 
+ * @Author: ashen23
+ * @LastEditTime: 2020-06-24 17:52:31
+ * @FilePath: /faker/faker/templates/base.html
+ * @Copyright: © 2020 Ashen23. All rights reserved.
+--> 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='images/faker.png') }}">
+  <title>{{ title }}</title>
+
+  <script src="{{ url_for('static', filename='style/axios.min.js') }}"></script>
+
+  <!-- import Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <link rel="stylesheet" href="{{ url_for('static',filename='style/home.css') }}">
+
+  {% block header %}{% endblock %}
+
+</head>
+
+<body>
+
+    <div id="app" v-cloak>
+
+        {% block content %}{% endblock %}
+    </div>
+
+</body>
+
+{% block script %}{% endblock %}
+
+</html>
