@@ -20,7 +20,7 @@ Faker 用于一键搭建本地 mock data 服务，基于python3 + Flask。
 ### clone 项目
 
 ```Shell
-git clone 
+git clone git@github.com:515783034/Faker.git
 ```
 
 ### 增加执行权限
