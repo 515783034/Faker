@@ -10,10 +10,6 @@
     color: #ff6600;
 }
 
-.dialog-input {
-    width: 60%;
-}
-
 .el-menu--horizontal>.el-menu-item.is-active {
     border-bottom: 2px solid #ff6600;
 }

@@ -1,7 +1,7 @@
 <!--
  * @Description: 
  * @Author: ashen23
- * @LastEditTime: 2020-06-24 17:07:42
+ * @LastEditTime: 2020-07-03 16:58:48
  * @FilePath: /faker/faker/templates/index.html
  * @Copyright: © 2020 Ashen23. All rights reserved.
 -->
@@ -44,7 +44,7 @@
 
         <el-table stripe
           :data="section.urls.filter(data => !search || data.url.toLowerCase().includes(search.toLowerCase()))"
-          style="width: 80%">
+          style="width: 100%">
           <el-table-column label="名称" prop="desc" width='220'></el-table-column>
           <el-table-column label="方法" prop="method" width='100'></el-table-column>
           <el-table-column label="参数" prop="param" width='130'></el-table-column>

@@ -6,7 +6,7 @@ __pycache__/
 # C extensions
 *.so
 
-mockAPI/venv/
+logs/
 out.log
 .vscode/
 mockAPI.code-workspace
@@ -15,7 +15,6 @@ mockAPI.code-workspace
 .Python
 build/
 develop-eggs/
-Images/
 dist/
 downloads/
 eggs/

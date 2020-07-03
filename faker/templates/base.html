@@ -1,8 +1,8 @@
 <!--
  * @Description: 
  * @Author: ashen23
- * @LastEditTime: 2020-06-24 17:52:31
- * @FilePath: /faker/faker/templates/base.html
+ * @LastEditTime: 2020-07-03 16:53:04
+ * @FilePath: /faker/Users/shijian141/Documents/Others/Faker/faker/templates/base.html
  * @Copyright: © 2020 Ashen23. All rights reserved.
 --> 
 <!DOCTYPE html>
@@ -15,16 +15,19 @@
 
   <script src="{{ url_for('static', filename='style/axios.min.js') }}"></script>
 
-  <!-- import Vue.js -->
-  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script> -->
-  <!-- 引入样式 -->
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <!-- 引入组件库 -->
-  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <!-- 本地引入 js/css 文件，提交加载速度 -->
+  <script src="{{ url_for('static', filename='js/axios.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/vue.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/el-index.js') }}"></script>
+  <link rel="stylesheet" href="{{ url_for('static',filename='style/el-index.css') }}">
   <link rel="stylesheet" href="{{ url_for('static',filename='style/home.css') }}">
 
+  <!-- import Vue.js -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+  <!-- 引入样式 -->
+  <!-- <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"> -->
+  <!-- 引入组件库 -->
+  <!-- <script src="https://unpkg.com/element-ui/lib/index.js"></script> -->
   {% block header %}{% endblock %}
 
 </head>
