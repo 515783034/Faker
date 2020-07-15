@@ -20,8 +20,8 @@
 
 @Description: 处理 api.ini 配置
 @Author: ashen23
-@LastEditTime: 2020-06-24 16:32:46
-@FilePath: /faker/faker/utils/normal_utils.py
+@LastEditTime: 2020-07-14 11:04:21
+@FilePath: /faker/utils/normal_utils.py
 @Copyright: © 2020 Ashen23. All rights reserved.
 '''
 
@@ -34,7 +34,7 @@ from utils.readconfig import ReadConfig
 userConfig = ReadConfig()
 
 # 获取本机ip地址
-def get_host_ip():
+def getLocalIp():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         s.connect(('8.8.8.8', 80))

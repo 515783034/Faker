@@ -9,12 +9,12 @@
     <el-col :span="5"></el-col>
 
     <el-col :span="12">
-        <el-input placeholder="输入接口名称" v-model="desc">
+        <el-input placeholder="输入接口名称" v-model="name">
             <template slot="prepend">接口名称</template>
         </el-input>
     </el-col>
 
-    <el-col v-if="desc && url && selectMethod" :span="3" :offset='1'>
+    <el-col v-if="name && url && selectMethod" :span="3" :offset='1'>
         <el-button style="margin-left: 30px;" type="warning" round @click="handleAddRequest">{{ url_info["state"] }}接口</el-button>
     </el-col>
 
@@ -92,8 +92,8 @@
         data() {
             return {
                 isNew: result["isNew"],
-                url: result["urlInfo"]["fullUrl"],
-                desc: result["urlInfo"]["desc"],
+                url: result["urlInfo"]["url"],
+                name: result["urlInfo"]["name"],
                 content: result["urlInfo"]["content"],
                 methods: result["methods"],
                 selectMethod: result["urlInfo"]["method"],
@@ -117,7 +117,7 @@
             }
         },
         methods: {
-            selectSection(value) {             
+            selectSection(value) {                
                 app.url = value;
             },
             paramTypeChanged(value) {
@@ -137,14 +137,15 @@
                 let param = { 
                     "urlId": result["urlInfo"]["id"],
                     "url": app.url, 
-                    "desc": app.desc,
+                    "name": app.name,
                     "content": app.content, 
                     "method":app.selectMethod,
                     "paramName": app.paramName,
                     "paramValues": app.paramValues,
                     "paramJson": app.paramJson,
                     "paramType": app.selectParamType,
-                    "isNew": result["isNew"]
+                    "isNew": result["isNew"],
+                    "groupName": app.selectTitle
                 }     
 
                 axios.post($SCRIPT_ROOT + '/addRequest', param).then(function (response) {
@@ -157,6 +158,9 @@
             },
             handleClose(tag) {                
                 app.paramValues.splice(app.paramValues.indexOf(tag), 1);
+                if (app.paramValues.length > 0) {
+                    app.selectParamValue = app.paramValues[0];                    
+                }
             },
             showInput() {
                 app.inputVisible = true;
@@ -173,10 +177,6 @@
                 }
                 app.inputVisible = false;
                 app.inputValue = '';
-            },
-            handleAddGroup() {
-                console.log("add group");
-                
             }
         }
     })

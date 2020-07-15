@@ -20,8 +20,8 @@
 
 @Description: 读取config.ini 配置内容
 @Author: ashen23
-@LastEditTime: 2020-06-24 11:53:02
-@FilePath: /faker/faker/utils/readconfig.py
+@LastEditTime: 2020-07-15 16:15:55
+@FilePath: /faker/utils/readconfig.py
 @Copyright: © 2020 Ashen23. All rights reserved.
 '''
 
@@ -68,7 +68,8 @@ class ReadConfig:
         return self.getParam(LOGSection, param)
 
     def projectName(self):
-        return os.path.basename(self.api("apiFile")).split(".")[0]
+        print("--{}--".format(self.api("project")))
+        return self.api("project")
 
     def isDebug(self):
         if self.cf.has_section(APISection) & self.cf.has_option(APISection, "isDebug"):

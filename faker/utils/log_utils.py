@@ -2,8 +2,8 @@
 @Date: 2020-06-24 11:26:50
 @Author: ashen23
 @LastEditors: ashen_23
-@LastEditTime: 2020-06-24 12:01:30
-@FilePath: /faker/faker/utils/log_utils.py
+@LastEditTime: 2020-07-14 11:15:01
+@FilePath: /faker/utils/log_utils.py
 '''
 # 方便后续随时更换或者增加规则
 
@@ -42,3 +42,4 @@ def logInfo(info):
 # debug 日志
 def logDebug(debugInfo):
     logger.debug(debugInfo)
+    print(debugInfo)

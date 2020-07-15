@@ -2,8 +2,8 @@
  * @Date: 2020-06-19 15:04:36
  * @Author: ashen23
  * @LastEditors: ashen_23
- * @LastEditTime: 2020-06-24 16:10:56
- * @FilePath: /faker/faker/templates/detail.html
+ * @LastEditTime: 2020-07-15 10:39:45
+ * @FilePath: /faker/templates/detail.html
 --> 
 
 {% extends "base.html" %}
@@ -14,7 +14,7 @@
 
 <el-row type="flex" class="row-bg" justify="center">
     <el-col :span="18">
-        <el-alert :title="desc" type="info" :description="url" show-icon :closable="false"></el-alert>
+        <el-alert :title="desc" type="info" :description='urlInfo["url"]' show-icon :closable="false"></el-alert>
     </el-col>
 </el-row>
 
@@ -23,7 +23,7 @@
     <el-col :span="3"></el-col>
     <el-col :span="4">
         <el-input placeholder="参数名（可选）" v-model="paramName" :disabled="true">
-            <template slot="prepend">{{ result["urlInfo"]["paramType"] }}</template>
+            <template slot="prepend">{{ urlInfo["paramType"] }}</template>
         </el-input>
     </el-col>
 
@@ -56,24 +56,24 @@
 <!-- script -->
 {% block script %}
 <script>
-    result = {{ result|tojson }};
+    urlInfo = {{ urlInfo|tojson }};
     $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 
     var app = new Vue({
         el: '#app',
         data() {
             return {
-                desc: result["urlInfo"]["desc"],
-                content: result["urlInfo"]["content"],
-                paramName: result["urlInfo"]["param"],
-                paramValues: result["urlInfo"]["param_values"],
-                paramJson: result["urlInfo"]["param_jsons"],
-                selectParamValue: result["urlInfo"]["selectParamValue"]
+                desc: urlInfo["name"],
+                content: urlInfo["content"],
+                paramName: urlInfo["param"],
+                paramValues: urlInfo["param_values"],
+                paramJson: urlInfo["param_jsons"],
+                selectParamValue: urlInfo["selectParamValue"]
             };
         },
         methods: {
             handleEdit() {
-                window.open($SCRIPT_ROOT + '/add_request?url=' + result["url"] + "&method=" + result["urlInfo"]["method"] + "&urlId=" + result["urlInfo"]["id"], '_blank');
+                window.open($SCRIPT_ROOT + '/add_request?urlId=' + urlInfo["id"], '_blank');
             }
         }
     })

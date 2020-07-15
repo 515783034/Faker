@@ -1,9 +1,0 @@
-{
-    "code": 1,
-    "msg": "成功",
-    "data": {
-        "name": "iPhone 6S",
-        "price": 2399,
-        "goodsId": "G10004"
-    }
-}
