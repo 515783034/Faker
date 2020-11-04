@@ -17,6 +17,8 @@ Faker 用于一键搭建本地 mock data 服务，基于python3 + Flask。
 - [x] 一键搭建本地服务
 - [ ] 快速批量导入接口
 
+![homepage](document/homepage.png)
+![request](document/request_detail.png)
 
 ## 依赖
 
@@ -28,6 +30,12 @@ Faker 用于一键搭建本地 mock data 服务，基于python3 + Flask。
 
 ```Shell
 git clone git@github.com:515783034/Faker.git
+
+# 下载依赖
+cd faker
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements.txt
 ```
 
 ### 增加执行权限
