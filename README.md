@@ -6,7 +6,7 @@
  * @FilePath: /faker/README.md
 --> 
 
-Faker 用于一键搭建本地 mock data 服务，基于python3 + Flask。
+Faker 用于一键搭建本地 mock data 服务，方便客户端调试接口。基于python3 + Flask。
 
 
 ## 特性
