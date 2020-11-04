@@ -189,6 +189,7 @@ def add_request():
     error = Uapi.saveUrl(urlId, url, name, method, {}, groupUrl)
     if error:
         return resError(error)
+    
     writeJson(jsonPathBy(url), json.loads(content))
     return resSuccess()
 

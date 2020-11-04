@@ -141,15 +141,17 @@
             },
             handleAddRequest() {
                 var paramJsons = [];
-                for (i=0;i<editors.length;i++) {
-                    paramJsons.push(JSON.stringify(editors[i].get()));
+                if (result["urlInfo"]["param_values"]) {
+                    for (i=0;i<editors.length;i++) {
+                        paramJsons.push(JSON.stringify(editors[i].get()));
+                    }
                 }
 
                 let param = { 
                     "urlId": result["urlInfo"]["id"],
                     "url": app.url, 
                     "name": app.name,
-                    "content": app.content, 
+                    "content": JSON.stringify(editor.get()), 
                     "method":app.selectMethod,
                     "paramName": app.paramName,
                     "paramValues": app.paramValues,
