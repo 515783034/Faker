@@ -8,6 +8,12 @@
 
 {% extends "base.html" %}
 
+{% block header %}
+<script src="{{ url_for('static', filename='js/jsoneditor.min.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static',filename='style/jsoneditor.min.css') }}">
+{% endblock %}
+
+
 <!-- body content -->
 {% block content %}
 <center class="title">Mock Data 接口详情</center>
@@ -36,11 +42,17 @@
     <el-col :span="18">
         <el-tabs v-if="paramValues" v-model="selectParamValue" type="card">
             <el-tab-pane v-for="(item, index) in paramValues" :key="item" :label="item" :name="item">
-            <el-input type="textarea" rows=27 placeholder="请输入接口待返回的json字符串" v-model="paramJson[index]"></el-input>
+                <div :id="'jsoneditor'+index" style="height: 550px;"></div>
+
+            <!-- <el-input type="textarea" rows=27 placeholder="请输入接口待返回的json字符串" v-model="paramJson[index]"></el-input> -->
             </el-tab-pane>
         </el-tabs>
 
-        <el-input v-else type="textarea" rows=27 placeholder="请输入接口待返回的json字符串" v-model="content"></el-input>
+        <!-- <el-input v-else type="textarea" rows=27 placeholder="请输入接口待返回的json字符串" v-model="content"></el-input> -->
+
+        <div id="jsoneditor" v-else style="height: 550px;"></div>
+    </el-col>
+</el-row>
 
 <div style="height: 25px;"></div>
 
@@ -50,8 +62,6 @@
     </el-col>
 </el-row>
 {% endblock %}
-
-
 
 <!-- script -->
 {% block script %}
@@ -77,6 +87,31 @@
             }
         }
     })
+
+    const options = {
+        mode: 'code',
+        language: "zh-CN",
+        onError: function (err) {
+        alert(err.toString())
+        },
+        onModeChange: function (newMode, oldMode) {
+        console.log('Mode switched from', oldMode, 'to', newMode)
+        }
+    }
+
+    if(urlInfo["param_values"]) {
+        var editors = new Array();
+        for(var i =0;i<urlInfo["param_values"].length;i++) {
+            var container = document.getElementById("jsoneditor"+i);
+            var jsonData = JSON.parse(urlInfo["param_jsons"][i])
+            var editor = new JSONEditor(container, options, jsonData);
+            editors.push(editor);
+        }
+    } else {
+        var container = document.getElementById("jsoneditor");
+        var jsonData = JSON.parse(urlInfo["content"])
+        var editor = new JSONEditor(container, options, jsonData);
+    }
 
 </script>
 {% endblock %}

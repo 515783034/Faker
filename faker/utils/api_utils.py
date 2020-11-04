@@ -1,7 +1,7 @@
 '''
 @Description: 
 @Author: ashen23
-@LastEditTime: 2020-07-15 16:01:39
+@LastEditTime: 2020-07-20 14:43:16
 @FilePath: /faker/utils/api_utils.py
 @Copyright: © 2020 Ashen23. All rights reserved.
 '''
@@ -25,6 +25,8 @@ class ApiUtils:
             print(" \033[32m首页地址可访问：http://127.0.0.1:5000\033[0m")
         else:
             logDebug("加载project:{}出错".format(projectName))
+        
+        # self._flashDataBase()
 
     def getUrlById(self, urlId):
         return fakerSession.query(UrlModel).filter(UrlModel.id == urlId).first()
@@ -34,7 +36,9 @@ class ApiUtils:
 
     # 根据名称获取 group(没有的话默认取 otherGroup)
     def getGroupByUrl(self, groupUrl):
-        group = fakerSession.query(GroupModel).filter(GroupModel.baseUrl == groupUrl).first()
+        print(self.project.id)
+        group = fakerSession.query(GroupModel).filter((GroupModel.baseUrl == groupUrl) & (GroupModel.project_id == self.project.id)).first()
+        print(group.id)
         return group if group else self.otherGroup()
 
     '''
@@ -49,7 +53,6 @@ class ApiUtils:
         fakerSession.commit()
 
     def deleteOtherParam(self, url, method, paramName, existUrls):
-        name = nameBy(url)
         basePath = jsonPathBy(url)
         directory = os.path.dirname(basePath)
         for file in os.listdir(directory):
@@ -68,7 +71,7 @@ class ApiUtils:
         return group
 
     def otherGroup(self):
-        other = fakerSession.query(GroupModel).filter(GroupModel.desc == "other").first()
+        other = fakerSession.query(GroupModel).filter((GroupModel.desc == "other") & (GroupModel.project_id == self.project.id)).first()
         return other if other else self.addGroup({"name": "其他","desc":"other", "icon":"el-icon-connection", "baseUrl":""})
 
     '''
@@ -192,3 +195,13 @@ class ApiUtils:
     '''
     def getSectionsDesc(self):
         return [{"name":group.name,"baseUrl":group.baseUrl} for group in self.project.groups]
+    
+
+    # def _flashDataBase(self):
+    #     # cachedUrls = []
+    #     for group in self.project.groups:
+    #         if group.id != 5:
+    #             continue
+    #         for urlInfo in group.urls:
+    #             urlInfo.group_id = 15
+    #     fakerSession.commit()

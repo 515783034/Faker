@@ -18,9 +18,10 @@
       <el-link class="label-ip" type="info" href="{{ ip }}" target="_blank">{{ ip }}</el-link>
     </div>
   </el-col>
-  <el-col :span="6">
+  <el-col :span="8">
     <el-button round size="mini" @click="handleShowAddGroup" style="margin-top: 30px;">新建分组</el-button>
     <el-button round size="mini" @click="handleAddRequest" style="margin-top: 30px;">添加接口</el-button>
+    <el-button round size="mini" type="success" @click="handleOpenResource" style="margin-top: 30px;">资源页</el-button>
   </el-col>
 </el-row>
 
@@ -159,6 +160,9 @@
       },
       handleShowAddGroup() {
         app.dialogVisible = true;
+      },
+      handleOpenResource() {
+        window.open($SCRIPT_ROOT + '/resource/index', '_blank');
       },
       handleDetail(info) {
         window.open($SCRIPT_ROOT + '/api_detail?urlId=' + info.id, '_blank');

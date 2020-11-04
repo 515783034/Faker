@@ -8,6 +8,10 @@ __pycache__/
 
 logs/
 out.log
+faker/logs/
+faker/jsons/PAHealth
+faker/venv
+faker/static/images/uploaded
 .vscode/
 mockAPI.code-workspace
 

@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block header %}
+<script src="{{ url_for('static', filename='js/jsoneditor.min.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static',filename='style/jsoneditor.min.css') }}">
+{% endblock %}
+
 <!-- body content -->
 {% block content %}
     <center class="title">{{ url_info["state"] }} mock 数据</center>
@@ -45,7 +50,7 @@
     <el-col :span="5"></el-col>
     <el-col :span="4">
         <el-input placeholder="参数名（可选）" v-model="paramName">
-            <el-select slot="prepend" v-model="selectParamType" placeholder="参数类型(可选)" @change="paramTypeChanged">
+            <el-select slot="prepend" v-model="selectParamType" placeholder="参数类型(可选)">
                 <el-option v-for="type in paramTypes" :key="type.value" :label="type" :value="type"></el-option>
             </el-select>
         </el-input>
@@ -68,10 +73,14 @@
     <el-col :span="18">
         <el-tabs v-if="paramValues.length>0" v-model="selectParamValue" type="card">
             <el-tab-pane v-for="(item, index) in paramValues" :key="item" :label="item" :name="item">
-                <el-input type="textarea" rows=27 placeholder="请输入接口待返回的json字符串" v-model="paramJson[index]"></el-input>
+                <!-- <el-input type="textarea" rows=27 placeholder="请输入接口待返回的json字符串" v-model="paramJson[index]"></el-input> -->
+                <div :id="'jsoneditor'+index" style="height: 550px;"></div>
+
             </el-tab-pane>
         </el-tabs>
-        <el-input v-else type="textarea" rows=27 placeholder="请输入接口待返回的json字符串" v-model="content"></el-input>
+        <div id="jsoneditor" v-else style="height: 550px;"></div>
+
+        <!-- <el-input v-else type="textarea" rows=27 placeholder="请输入接口待返回的json字符串" v-model="content"></el-input> -->
     </el-col>
 
     </el-row>
@@ -120,9 +129,6 @@
             selectSection(value) {                
                 app.url = value;
             },
-            paramTypeChanged(value) {
-                console.log(value);
-            },
             methodChanged(value) {
                 if (value == "GET") {
                     app.paramTypes = ["Params"];
@@ -134,6 +140,11 @@
                 }
             },
             handleAddRequest() {
+                var paramJsons = [];
+                for (i=0;i<editors.length;i++) {
+                    paramJsons.push(JSON.stringify(editors[i].get()));
+                }
+
                 let param = { 
                     "urlId": result["urlInfo"]["id"],
                     "url": app.url, 
@@ -142,7 +153,7 @@
                     "method":app.selectMethod,
                     "paramName": app.paramName,
                     "paramValues": app.paramValues,
-                    "paramJson": app.paramJson,
+                    "paramJson": paramJsons,
                     "paramType": app.selectParamType,
                     "isNew": result["isNew"],
                     "groupName": app.selectTitle
@@ -180,6 +191,32 @@
             }
         }
     })
+
+    const options = {
+        mode: 'code',
+        language: "zh-CN",
+        onError: function (err) {
+            alert(err.toString())
+        },
+        onModeChange: function (newMode, oldMode) {
+            console.log('Mode switched from', oldMode, 'to', newMode)
+        }
+    }
+
+    if(result["urlInfo"]["param_values"]) {
+        var editors = new Array();
+        for(var i =0;i<result["urlInfo"]["param_values"].length;i++) {
+            var container = document.getElementById("jsoneditor"+i);
+            var jsonData = JSON.parse(result["urlInfo"]["param_jsons"][i])
+            var editor = new JSONEditor(container, options, jsonData);
+            editors.push(editor);
+        }
+    } else {
+        var container = document.getElementById("jsoneditor");
+        var jsonData = JSON.parse(result["urlInfo"]["content"])
+        var editor = new JSONEditor(container, options, jsonData);
+    }
+
 
 </script>
 

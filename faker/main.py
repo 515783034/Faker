@@ -20,7 +20,7 @@
 
 @Description: 主入口文件，接口解析
 @Author: ashen23
-@LastEditTime: 2020-07-15 16:17:16
+@LastEditTime: 2020-07-20 14:28:23
 @FilePath: /faker/main.py
 @Copyright: © 2020 Ashen23. All rights reserved.
 '''
@@ -39,6 +39,7 @@ from utils.file_utils import jsonPathBy, loadJson, writeJson, renameJson
 from utils.normal_utils import getLocalIp, groupIcons, resError, resSuccess, resNotFound
 from utils.log_utils import logDebug, logError, logInfo
 from utils.models import initData, UrlModel
+from modules.resource import bpResource
 
 app = Flask(__name__)
 api = Api(app)
@@ -46,6 +47,8 @@ api = Api(app)
 app.jinja_env.variable_start_string = '{{ '
 app.jinja_env.variable_end_string = ' }}'
 app.config['JSON_AS_ASCII'] = False
+app.register_blueprint(bpResource,url_prefix='/resource')
+
 
 initData()
 userConfig = ReadConfig()
@@ -122,7 +125,7 @@ def api_detail():
     urlModel = Uapi.getUrlDetail(urlId)["urlInfo"]
     if not urlModel:
         return render_template("404.html")
-    title = userConfig.theme('title') + "-" + urlModel["name"]
+    title = urlModel["name"]
     return render_template('detail.html', urlInfo=urlModel,title=title)
 
 # 添加/修改 接口界面
@@ -131,7 +134,7 @@ def add_request_page():
     urlId = int(request.args.get("urlId", -1))
     urlModel = Uapi.getUrlById(urlId)
     requestInfo = Uapi.getUrlDetail(urlId)
-    title = userConfig.theme('title') + "-* " + (urlModel.name if urlModel else "添加接口")
+    title = "* " + (urlModel.name if urlModel else "添加接口")
     return render_template('add.html', url_info=requestInfo, title=title)
 ################## Page end ##################
 
@@ -213,32 +216,10 @@ def jsonValidate(content):
     try:
         json.loads(content)
     except json.decoder.JSONDecodeError as error:
+        print("json error: {}".format(error))
+        print(content[19960:19990])
         return "{}".format(error)
     return None
-
-# 保存（新增/修改）接口信息到数据库
-# def saveUrl(urlId, url, name, method, paramName, paramType, groupUrl):
-#     name = name if name else ""
-#     if urlId == -1:
-#         if Uapi.getUrlByPath(url):
-#             return "存在同名 url,请检查后重试"
-#         urlModel = UrlModel(url=url, name=name, method=method, param=paramName, paramType=paramType)
-#     else:
-#         urlModel = Uapi.getUrlById(urlId)
-#         # 若果修改了 url，需要修改对应的 json 文件
-#         if urlModel.url != url:
-#             renameJson(urlModel.url, url, urlModel.method)
-#         urlModel.url = url
-#         urlModel.name = name
-#         urlModel.method = method
-#         urlModel.param = paramName
-#         urlModel.paramType = paramType
-    
-#     print("------------ {}".format(groupUrl))
-#     group = Uapi.getGroupByUrl(groupUrl)
-#     group.urls.append(urlModel)
-
-#     fakerSession.commit()
 
 # 404 提醒
 @app.errorhandler(404) 
@@ -256,6 +237,6 @@ if __name__ == '__main__':
         Uapi = ApiUtils(project)
 
         api.add_resource(FetchRequest, *Uapi.loadRestfulUrls())
-
+        app.config["JSONIFY_MIMETYPE"] = "application/json;charsetutf-8"
         app.debug = userConfig.isDebug()
         app.run(host='0.0.0.0', port=5000)
